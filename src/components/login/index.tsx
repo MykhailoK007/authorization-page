@@ -29,9 +29,7 @@ export const Login: React.FC<TLoginProps> = props => {
             </div>
           </div>
         </div>
-        <div className='login-page__form-submit'>
-          <div role='button'>Log In</div>
-        </div>
+        <button className='login-page__form-submit'>Log In</button>
       </div>
     </div>
   );
