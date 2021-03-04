@@ -1,0 +1,33 @@
+.timerScoreboard {
+  width: 10%;
+  margin-top: 10px;
+  color: orange;
+  padding: 5px;
+}
+
+.toggleBtn {
+  width: 50px;
+  background: grey;
+  border: none;
+  margin: 10px;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+}
+.progressBar[value] {
+  display: block;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 95%;
+  height: 40px;
+  margin: 0 auto;
+}
+.progressBar[value]::-webkit-progress-bar {
+  background: rgb(82, 82, 82);
+  padding: 4px;
+  border-radius: 20px;
+}
+.progressBar[value]::-webkit-progress-value {
+  background: rgb(54, 192, 87);
+  border-radius: inherit;
+}
