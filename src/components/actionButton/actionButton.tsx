@@ -2,21 +2,14 @@ import React from 'react';
 
 interface ActionButtonProps {
   value: string;
-  classes: string;
-  disabledCondition: boolean;
-  withActions: boolean | undefined;
-  handleClick(): void;
+  className: string;
+  disabled: boolean;
+  onClick(): void;
 }
-export const ActionButton = ({
-  classes,
-  disabledCondition,
-  value,
-  handleClick,
-  withActions
-}: ActionButtonProps) => {
-  return withActions ? (
-    <button className={classes} disabled={disabledCondition} onClick={handleClick}>
-      {value}
+export const ActionButton = (props: ActionButtonProps) => {
+  return (
+    <button type='button' {...props}>
+      {props.value}
     </button>
-  ) : null;
+  );
 };

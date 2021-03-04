@@ -32,15 +32,17 @@ export const Pagination = ({
   };
   return (
     <div className={css.wrapper}>
-      <ActionButton
-        classes={actionBtnStyles}
-        disabledCondition={currentPage === 1}
-        value='Prev'
-        handleClick={() => handleChange(currentPage - 1)}
-        withActions={withActions}
-      />
+      {withActions && (
+        <ActionButton
+          className={actionBtnStyles}
+          disabled={currentPage === 1}
+          value='Prev'
+          onClick={() => handleChange(currentPage - 1)}
+        />
+      )}
+
       {Array.from({ length: totalPages }).map((el, index) => {
-        let pageNumber: number = index + 1;
+        const pageNumber: number = index + 1;
         return (
           <button
             key={index}
@@ -50,17 +52,18 @@ export const Pagination = ({
             })}
             onClick={() => handleChange(pageNumber)}
           >
-            {index + 1}
+            {pageNumber}
           </button>
         );
       })}
-      <ActionButton
-        classes={actionBtnStyles}
-        value='Next'
-        disabledCondition={currentPage === totalPages}
-        handleClick={() => handleChange(currentPage + 1)}
-        withActions={withActions}
-      />
+      {withActions && (
+        <ActionButton
+          className={actionBtnStyles}
+          value='Next'
+          disabled={currentPage === totalPages}
+          onClick={() => handleChange(currentPage + 1)}
+        />
+      )}
     </div>
   );
 };
