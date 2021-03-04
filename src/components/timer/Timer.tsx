@@ -1,29 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import classes from './timer.module.scss';
+import classes from './Timer.module.scss';
 
 interface TimerProps {
   time: number;
   autoStart: boolean;
   step: number;
+  onTimeEnd(): void;
+  onTimeStarted(): void;
+  onTimePause(): void;
+  onTick(): void;
 }
-export const Timer = ({ time, autoStart, step }: TimerProps) => {
+export const Timer = ({
+  time,
+  autoStart,
+  step,
+  onTimeEnd,
+  onTimeStarted,
+  onTimePause,
+  onTick
+}: TimerProps) => {
   const [currentTime, setCurrentTime] = useState<number>(time);
-  const [isTimerLaunched, setTimerLaunched] = useState<boolean>(autoStart);
+  const [isTimerLaunched, setIsTimerLaunched] = useState<boolean>(autoStart);
 
   useEffect(() => {
     if (isTimerLaunched) {
+      onTimeStarted();
+    }
+  }, []);
+  useEffect(() => {
+    if (isTimerLaunched) {
       interruptTimer();
-      const time = setInterval(onTick, step);
+      const time = setInterval(handleTick, step);
       return () => clearInterval(time);
     }
   }, [isTimerLaunched, currentTime]);
 
-  const onTick = (): void => {
-    currentTime > 0 ? setCurrentTime(prevProps => prevProps - step / 1000) : setTimerLaunched(false);
+  const handleTick = (): void => {
+    currentTime > 0 ? setCurrentTime(prevProps => prevProps - step / 1000) : setIsTimerLaunched(false);
+    onTick();
   };
   const toggleTimer = (): void => {
     if (currentTime === 0) setCurrentTime(time);
-    setTimerLaunched(prevProps => !prevProps);
+    setIsTimerLaunched(prevProps => !prevProps);
+    isTimerLaunched ? onTimePause() : onTimeStarted();
   };
   const customizeTimeFormat = (time: number): string => {
     let minutes: number = time >= 60 ? Math.floor(time / 60) : 0;
@@ -31,7 +50,7 @@ export const Timer = ({ time, autoStart, step }: TimerProps) => {
     return `${minutes < 10 ? 0 : ''}${minutes}:${seconds < 10 ? 0 : ''}${seconds}`;
   };
   const pauseTimer = (): void => {
-    setTimerLaunched(false);
+    setIsTimerLaunched(false);
     setCurrentTime(0);
   };
   const interruptTimer = (): void => {
@@ -39,6 +58,7 @@ export const Timer = ({ time, autoStart, step }: TimerProps) => {
     if (nextNumber < 0)
       setTimeout(() => {
         pauseTimer();
+        onTimeEnd();
       }, currentTime * 1000);
   };
   return (
