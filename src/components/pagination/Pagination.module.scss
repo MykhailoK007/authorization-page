@@ -1,0 +1,17 @@
+.pagination {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+
+  button {
+    width: 30px;
+    height: 30px;
+    border: none;
+  }
+  button:disabled {
+    opacity: 0.6;
+  }
+  span {
+    margin: 0 25px;
+  }
+}

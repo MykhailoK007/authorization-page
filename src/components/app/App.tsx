@@ -1,36 +1,33 @@
-import React from 'react';
-import { Timer } from '../timer/Timer';
+import React, { useCallback, useState } from 'react';
+import { Header } from '../header';
+import { useProducts } from '../hooks/UseProducts';
+import { Pagination } from '../pagination';
+import { Products } from '../products';
+import { Modal } from '../shared/modal';
 
 export const App = () => {
+  const {
+    products,
+    page,
+    total,
+    changePage,
+    applyFilter,
+    editProduct,
+    deleteProduct,
+    addProduct
+  } = useProducts({ perPage: 5 });
+  const [isCreateModalActive, setIsModalActive] = useState<boolean>(false);
+  const toggleModal = useCallback(() => {
+    setIsModalActive((prev: boolean) => !prev);
+  }, []);
   return (
     <>
-      <Timer
-        time={10}
-        autoStart={true}
-        step={3000}
-        onTimeEnd={() => console.log('timer finished')}
-        onTimeStarted={() => console.log('timer started')}
-        onTimePause={() => console.log('timer paused')}
-        onTick={() => console.log('timer tick')}
-      />
-      <Timer
-        time={10}
-        autoStart={false}
-        step={1000}
-        onTimeEnd={() => console.log('timer finished')}
-        onTimeStarted={() => console.log('timer started')}
-        onTimePause={() => console.log('timer paused')}
-        onTick={() => console.log('timer tick')}
-      />
-      <Timer
-        time={2}
-        autoStart={false}
-        step={2000}
-        onTimeEnd={() => console.log('timer finished')}
-        onTimeStarted={() => console.log('timer started')}
-        onTimePause={() => console.log('timer paused')}
-        onTick={() => console.log('timer tick')}
-      />
+      <Header toggleModal={toggleModal} applyFilter={applyFilter} />
+      <Products products={products} editProduct={editProduct} deleteProduct={deleteProduct} />
+      {isCreateModalActive && (
+        <Modal toggleModal={toggleModal} handleSubmit={addProduct} title='Add product' />
+      )}
+      <Pagination page={page} pageCount={total} handleClick={changePage} />
     </>
   );
 };
