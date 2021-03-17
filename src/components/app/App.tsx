@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Header } from '../header';
-import { useProducts } from '../hooks/UseProducts';
+import { useProducts } from '../../hooks/UseProducts';
 import { Pagination } from '../pagination';
 import { Products } from '../products';
 import { Modal } from '../shared/modal';
@@ -15,7 +15,7 @@ export const App = () => {
     editProduct,
     deleteProduct,
     addProduct
-  } = useProducts({ perPage: 5 });
+  } = useProducts({ perPage: 2 });
   const [isCreateModalActive, setIsModalActive] = useState<boolean>(false);
   const toggleModal = useCallback(() => {
     setIsModalActive((prev: boolean) => !prev);

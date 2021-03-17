@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Product, IFilterOptions } from '../interfaces';
+import { Product, IFilterOptions } from '../components/interfaces';
 
 interface IUseProducts {
   initialProducts?: Product[];
@@ -57,12 +57,20 @@ const data: Product[] = [
 export const useProducts = ({ initialProducts = data, perPage }: IUseProducts) => {
   const [productList, setProductList] = useState<Product[]>(initialProducts);
   const [page, setPage] = useState<number>(1);
-  const products = useMemo(() => productList.slice((page - 1) * perPage, page * perPage), [
-    productList,
-    page,
-    perPage
-  ]);
-  const total = useMemo(() => Math.ceil(productList.length / perPage), [productList, perPage]);
+  const [filterOption, setFilterOption] = useState<IFilterOptions | null>(null);
+
+  const { products, total } = useMemo(() => {
+    let localList = productList;
+
+    if (filterOption) {
+      filterOption.name && (localList = localList.filter(el => el.name === filterOption.name!));
+      filterOption.priceMore && (localList = localList.filter(el => el.price > filterOption.priceMore!));
+      filterOption.priceLess && (localList = localList.filter(el => el.price < filterOption.priceLess!));
+    }
+    let products = localList.slice((page - 1) * perPage, page * perPage);
+    let total = Math.ceil(localList.length / perPage);
+    return { products, total };
+  }, [productList, page, perPage, filterOption]);
   const changePage = useCallback(
     page => {
       setPage(page);
@@ -72,12 +80,9 @@ export const useProducts = ({ initialProducts = data, perPage }: IUseProducts) =
 
   const applyFilter = useCallback(
     (filterOption: IFilterOptions): void => {
-      debugger;
-      filterOption.name && setProductList(productList.filter(el => el.name === filterOption.name!));
-      filterOption.priceMore && setProductList(productList.filter(el => el.price > filterOption.priceMore!));
-      filterOption.priceLess && setProductList(productList.filter(el => el.price < filterOption.priceLess!));
+      setFilterOption(filterOption);
     },
-    [productList]
+    [setFilterOption]
   );
 
   const editProduct = (prod: Product) => {
