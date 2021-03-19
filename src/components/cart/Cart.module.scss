@@ -1,0 +1,47 @@
+@import 'color.scss';
+
+.cart {
+  width: 40%;
+  margin: 100px auto;
+  border: 1px solid grey;
+  border-radius: 10px;
+}
+.message {
+  text-align: center;
+  margin: 10px;
+}
+
+.cartHeader {
+  width: 80%;
+  text-align: center;
+  margin: 20px auto;
+  font-size: 30px;
+  border-bottom: 1px solid $color-grey;
+  padding-bottom: 10px;
+}
+.cartBody {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+
+  .product {
+    width: 80%;
+    margin: 0 auto;
+    border-bottom: 1px solid orange;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+  }
+}
+.cartFooter {
+  text-align: end;
+  padding: 20px;
+}
+.sideWrapper {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+}

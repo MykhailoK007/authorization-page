@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Product } from '../../interfaces';
+import { Product } from '../../../interfaces';
 import css from './Modal.module.scss';
 
 interface IModal {

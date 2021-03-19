@@ -1,17 +1,18 @@
-import React, { useState, useCallback } from 'react';
-import { isPropertySignature } from 'typescript';
-import { Product } from '../interfaces';
+import React, { useState, useCallback, useContext } from 'react';
+import CartProvider from '../../contexts/CartContext';
+import { Product, ICartList } from '../../interfaces';
 import { Modal } from '../shared/modal';
 import css from './Products.module.scss';
 
-interface IProduct {
+interface ProductsProps {
   products: Product[];
-  editProduct(prod: Partial<Product>): void;
+  editProduct?(prod: Partial<Product>): void;
   deleteProduct(id: number): void;
 }
-export const Products = ({ products, deleteProduct, editProduct }: IProduct) => {
+export const Products = ({ products, deleteProduct, editProduct }: ProductsProps) => {
   const [isEditModalActive, setIsEditModalActive] = useState<boolean>(false);
   const [currentProduct, setCurrentProduct] = useState<number | null>(null);
+  const [cartList, setCartList] = useContext(CartProvider);
   const toggleModal = useCallback(() => {
     setIsEditModalActive((prev: boolean) => !prev);
   }, []);
@@ -19,11 +20,27 @@ export const Products = ({ products, deleteProduct, editProduct }: IProduct) => 
     setCurrentProduct(id);
     toggleModal();
   };
+  const handleAddToCart = (product: ICartList): void => {
+    cartList.filter((prod: ICartList) => prod.id === product.id).length
+      ? setCartList(
+          cartList.map((prod: ICartList) =>
+            prod.id === product.id ? { ...prod, count: prod.count! + 1 } : prod
+          )
+        )
+      : setCartList([...cartList, { ...product, count: 1 }]);
+  };
   return (
     <div className={css.productsWrapper}>
       {products.map(product => (
         <div key={product.id} className={css.product}>
           <div className={css.productHeader}>
+            <button
+              onClick={() => {
+                handleAddToCart(product);
+              }}
+            >
+              +
+            </button>
             <button onClick={handleEditBtn.bind(null, product.id)}>Edit</button>
             <button onClick={deleteProduct.bind(null, product.id)}>X</button>
           </div>
@@ -34,7 +51,7 @@ export const Products = ({ products, deleteProduct, editProduct }: IProduct) => 
       {isEditModalActive && (
         <Modal
           toggleModal={toggleModal}
-          handleSubmit={editProduct}
+          handleSubmit={editProduct!}
           title='Edit product'
           id={currentProduct!}
         />

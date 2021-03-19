@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Product, IFilterOptions } from '../components/interfaces';
+import { Product, IFilterOptions } from '../interfaces';
 
 interface IUseProducts {
   initialProducts?: Product[];

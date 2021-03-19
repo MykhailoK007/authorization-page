@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IFilterOptions } from '../interfaces';
+import { IFilterOptions } from '../../interfaces';
 import css from './Filter.module.scss';
 interface IFilter {
   onSubmit(date: IFilterOptions): void;

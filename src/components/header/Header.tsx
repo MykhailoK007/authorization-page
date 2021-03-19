@@ -1,6 +1,7 @@
 import React from 'react';
 import { Filter } from '../filter';
-import { IFilterOptions } from '../interfaces';
+import { IFilterOptions } from '../../interfaces';
+import { Link } from 'react-router-dom';
 import css from './Header.module.scss';
 
 interface IHeader {
@@ -15,6 +16,9 @@ export const Header = ({ toggleModal, applyFilter }: IHeader) => {
       <button className={css.addBtn} onClick={toggleModal}>
         +
       </button>
+      <Link to='/cart' className={css.addBtn}>
+        <button>Show Cart</button>
+      </Link>
       <Filter onSubmit={applyFilter} />
     </header>
   );

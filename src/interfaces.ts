@@ -9,3 +9,12 @@ export interface IFilterOptions {
   priceMore?: number;
   priceLess?: number;
 }
+
+export interface ICartList extends Product {
+  count?: number;
+}
+
+export interface ICartContextProps {
+  cartList: ICartList[];
+  setCartList(val: ICartList[]): void;
+}
