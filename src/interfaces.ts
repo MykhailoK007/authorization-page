@@ -10,11 +10,11 @@ export interface IFilterOptions {
   priceLess?: number;
 }
 
-export interface ICartList extends Product {
+export interface ICartProd extends Product {
   count?: number;
 }
 
 export interface ICartContextProps {
-  cartList: ICartList[];
-  setCartList(val: ICartList[]): void;
+  cartList: ICartProd[];
+  setCartList(val: ICartProd[]): void;
 }

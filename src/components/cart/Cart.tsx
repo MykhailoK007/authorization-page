@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-// import {CartConsumer} from '../../contexts/CartContext';
-import CartProvider from '../../contexts/CartContext';
-import { ICartList } from '../../interfaces';
+import React from 'react';
+import { ICartProd } from '../../interfaces';
 import css from './Cart.module.scss';
 
-export const Cart = () => {
-  const [cartList, setCartList] = useContext(CartProvider);
-  const handleClick = (id: number) => setCartList(cartList.filter((prod: ICartList) => prod.id !== id));
+interface CartListProps {
+  cartList: ICartProd[];
+  handleRemoveProduct(val: number): void;
+}
+export const Cart = ({ cartList, handleRemoveProduct }: CartListProps) => {
   const getTotalPrice = (): number =>
-    cartList.reduce((prev: number, current: ICartList) => prev + current.price * current.count!, 0);
+    cartList.reduce((prev: number, current: ICartProd) => prev + current.price * current.count!, 0);
   return (
     <div>
       <div className={css.cart}>
@@ -18,7 +18,7 @@ export const Cart = () => {
         ) : (
           <>
             <div className={css.cartBody}>
-              {cartList.map((product: ICartList) => (
+              {cartList.map((product: ICartProd) => (
                 <div className={css.product}>
                   <div className={css.sideWrapper}>
                     <span>{product.name} </span>
@@ -26,7 +26,7 @@ export const Cart = () => {
                   </div>
                   <div className={css.sideWrapper}>
                     {product.count && <span>Count: {product.count}</span>}
-                    <button onClick={handleClick.bind(null, product.id)}>X</button>
+                    <button onClick={() => handleRemoveProduct(product.id)}>X</button>
                   </div>
                 </div>
               ))}
