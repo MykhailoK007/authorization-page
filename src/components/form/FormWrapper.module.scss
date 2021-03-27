@@ -1,0 +1,50 @@
+@import 'color.scss';
+
+.formWrapper {
+  width: 30%;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: start;
+  border: 1px solid $color-grey;
+  border-radius: 10px;
+}
+.formBody {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px auto;
+  border-bottom: 1px solid grey;
+}
+.formBodyActions {
+  border-bottom: 1px solid grey;
+  padding-bottom: 20px;
+  header {
+    margin: 10px 0;
+  }
+  input {
+    margin: 5px 0;
+  }
+}
+.averageInput {
+  display: flex;
+  width: 40%;
+  margin-right: 10%;
+  input {
+    width: 100%;
+  }
+}
+.smallInput {
+  width: 30%;
+  height: 100px;
+  margin: 0 5px;
+  select {
+    width: 100%;
+  }
+}
+.submitForm {
+  width: 100%;
+  height: 35px;
+  margin-top: 10px;
+  background: blue;
+  color: white;
+}
