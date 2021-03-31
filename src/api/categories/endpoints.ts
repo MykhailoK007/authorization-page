@@ -1,12 +1,12 @@
-import { instance } from '../axios';
+import Axios from '../axios';
 import { GetCategoriesResponse, PostCategoryBody } from './types';
 
 export const getCategories = (): Promise<GetCategoriesResponse> => {
-  return instance.get('/categories');
+  return Axios.instance.get('/categories');
 };
 export const postCategory = (category: PostCategoryBody) => {
-  return instance.post('/categories', category);
+  return Axios.instance.post('/categories', category);
 };
 export const deleteCategory = (id: number) => {
-  return instance.delete(`/categories?id=${id}`);
+  return Axios.instance.delete(`/categories?id=${id}`);
 };
